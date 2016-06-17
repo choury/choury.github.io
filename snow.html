@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>一个简单的动画</title>
+        <script>
+
+// example code from mr doob : http://mrdoob.com/lab/javascript/requestanimationframe/
+
+var canvas, context;
+var points = new Array();
+var k = 4;
+
+function init() {
+
+    canvas = document.createElement( 'canvas' );
+    canvas.width = window.innerWidth * 0.99;
+    canvas.height = window.innerHeight * 0.98;
+
+    context = canvas.getContext( '2d' );
+
+    document.body.appendChild( canvas );
+    for(var i=0;i<100;i++){
+        var x = Math.random() * canvas.width;
+        var y = 0;
+        var r = Math.random() * 30 + 5;
+        var point = {"r":r, start:Math.random()*10000, pos:[{"x":x,"y":y},{"x":x,"y":y}]};
+        for(y = 0;y< canvas.height ; y = y+3*r){
+            x = x + canvas.width*r/200*Math.random() - canvas.width*r/400;
+            point.pos.push({"x":x, "y": y}); 
+
+        }
+        point.knot = new Array();
+        var n = point.pos.length;
+        var detu = 1.0/(n-k+1);
+        point.knot[0]=0;
+        for(var j =1; j < n-k+2; j++){
+            point.knot[j] = point.knot[j-1] + detu;
+        } 
+        points.push(point);
+    }
+
+}
+
+function deboor(ps, knot, k, i, u){
+    var denom,alpha;
+    var p = new Array();
+    for(var j =0;j<k;j++){
+        var point = {};
+        point.x = ps[i+j].x;
+        point.y = ps[i+j].y;
+        p.push(point);
+    }
+    for(var r=1; r<k; ++r) {
+        for(var m=k-1; m>=r; m--) {
+            var j = m+i-k+1;
+            if(j >= 0 && j+k-r < knot.length){
+                denom=knot[j+k-r]-knot[j];
+                alpha=(u-knot[j])/denom;
+                p[m].x=(1-alpha)*p[m-1].x+alpha*p[m].x;
+                p[m].y=(1-alpha)*p[m-1].y+alpha*p[m].y;
+            }
+        }
+    }
+    return p[k-1];
+}
+
+function draw(time) {
+    var width = canvas.width;
+    var height = canvas.height;
+
+    var global_gradient  =  context.createLinearGradient(0,0, 0, height);   //创建一个线性渐变
+    global_gradient.addColorStop(0,"#87CEEB");    //定义黄色渐变色
+    global_gradient.addColorStop(1,"#F0FFFF");    //定义红色渐变色
+
+    context.fillStyle = global_gradient;
+    context.fillRect( 0, 0, width, height );
+
+
+    for(var i = 0; i< 100; i++){
+        var u = (time * points[i].r/20 + points[i].start)%10000/10000;
+        var detu = points[i].knot[1] - points[i].knot[0]
+        var point = deboor(points[i].pos, points[i].knot, k, parseInt(u/detu), u);
+        var x = point.x;
+        var y = point.y;
+
+        var grd = context.createRadialGradient(x, y, 0, x, y, points[i].r);
+        grd.addColorStop(0.0, 'rgba(255, 255, 255, 0.900)');
+        grd.addColorStop(0.4, 'rgba(255, 255, 255, 0.600)');
+        grd.addColorStop(1.0, 'rgba(255, 255, 255, 0.000)');
+        context.fillStyle = grd;
+        context.beginPath();
+        context.arc( x, y, points[i].r, 0, Math.PI * 2, true );
+        context.closePath();
+        context.fill();
+    }
+
+    requestAnimationFrame(draw);
+}
+window.onload = function(){
+    init();
+    requestAnimationFrame(draw);
+}
+
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
+
+
+
