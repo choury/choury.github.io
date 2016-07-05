@@ -17,12 +17,21 @@
                 xmlhttp.send();
             }
             function show(obj){
-                loadmd(obj.getAttribute("file"));
+                var file = obj.getAttribute("file") 
+                loadmd(file);
+                window.history.pushState(null, null, "#"+file);
                 document.title = obj.innerText;
+            }
+            function loadhash(){
+                if(window.location.hash == ''){
+                    loadmd('index.md');
+                }else{
+                    loadmd(window.location.hash.substr(1));
+                }
             }
         </script>
     </head>
-    <body onload="loadmd('index.md')">
+    <body onload="loadmd('index.md')" onhashchange="loadhash()">
         <div id="index">
             <ul class="sumary">
                 <li><a href="javascript:void(0);" onclick="show(this);" file="first.md">first</a></li>
