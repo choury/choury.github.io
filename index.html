@@ -19,15 +19,19 @@
             function show(obj){
                 var file = obj.getAttribute("file") 
                 loadmd(file);
-                window.history.pushState(null, null, "#"+file);
+                if(file != window.location.hash.substr(1))
+                    window.history.pushState(null, null, "#"+file);
                 document.title = obj.innerText;
             }
             function loadhash(){
+                var file;
                 if(window.location.hash == ''){
-                    loadmd('index.md');
+                    file = 'index.md'
                 }else{
-                    loadmd(window.location.hash.substr(1));
+                    file = window.location.hash.substr(1);
                 }
+                loadmd(file);
+                document.title = file;
             }
         </script>
     </head>
