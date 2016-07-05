@@ -26,7 +26,7 @@
             function loadhash(){
                 var file;
                 if(window.location.hash == ''){
-                    file = 'index.md'
+                    file = 'README.md'
                 }else{
                     file = window.location.hash.substr(1);
                 }
@@ -35,7 +35,7 @@
             }
         </script>
     </head>
-    <body onload="loadmd('index.md')" onhashchange="loadhash()">
+    <body onload="loadmd('README.md')" onhashchange="loadhash()">
         <div id="index">
             <ul class="sumary">
                 <li><a href="javascript:void(0);" onclick="show(this);" file="first.md">first</a></li>
