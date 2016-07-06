@@ -14,7 +14,9 @@
                 xmlhttp.onreadystatechange=function() {
                     if (xmlhttp.readyState==4 && xmlhttp.status==200){
                         document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
-                        document.write("<script src='//cdn.mathjax.org/mathjax/latest/MathJax.js?config=default'><\/script>");
+                        var script = document.createElement( 'script' );
+                        script.setAttribute( 'src', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=default');
+                        document.body.appendChild( script );
                     }
                 }
                 xmlhttp.open("GET", file, true);
