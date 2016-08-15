@@ -7,15 +7,20 @@
         <script src="js/marked.js"></script>
         <script>
             if(window.location.protocol != 'https:') {
-                location.href = location.href.replace("http://", "https://");
+               location.href = location.href.replace("http://", "https://");
             }
             function loadmd(file){
                 var xmlhttp=new XMLHttpRequest();
                 xmlhttp.onreadystatechange=function() {
+                    var math = document.getElementById("mathjax");
+                    if(math){
+                        document.body.removeChild(math);
+                    }
                     if (xmlhttp.readyState==4 && xmlhttp.status==200){
                         document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
-                        var script = document.createElement( 'script' );
-                        script.setAttribute( 'src', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=default');
+                        var script = document.createElement('script');
+                        script.setAttribute('id', 'mathjax');
+                        script.setAttribute('src', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=default');
                         document.body.appendChild( script );
                     }
                 }
@@ -39,9 +44,12 @@
                 loadmd(file);
                 document.title = file;
             }
+            function backreload(){
+                window.location.replace(window.location.href);
+            }
         </script>
     </head>
-    <body onload="loadmd('README.md')" onhashchange="loadhash()">
+    <body onload="loadmd('README.md')" onhashchange="loadhash()" onpopState="backreload()">
         <div id="index">
             <ul class="sumary">
                 <li><a href="javascript:void(0);" onclick="show(this);" file="first.md">first</a></li>
