@@ -450,7 +450,7 @@ body.dark #wrapper {
   margin-left:20%;
 }
 
-hr, #md-content, #comment{
+#md-content, #comment{
     margin-left:10%;
     margin-right:25%;
 }
