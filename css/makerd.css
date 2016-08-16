@@ -436,7 +436,8 @@ body.dark #wrapper {
   float: left;
   position: fixed;
   left: 3%;
-  width: 20%;
+  width: 18%;
+  top: 15%;
   background: #fafafa;
   border-right: 1px solid rgba(0,0,0,.07);
   -webkit-transition: left 250ms ease;
@@ -449,7 +450,7 @@ body.dark #wrapper {
   margin-left:20%;
 }
 
-#md-content{
+hr, #md-content, #comment{
     margin-left:10%;
     margin-right:25%;
 }

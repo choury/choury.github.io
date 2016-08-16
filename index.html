@@ -4,6 +4,7 @@
         <meta charset="utf-8"/>
         <title>blog.choury.com</title>
         <link type="text/css" rel="stylesheet" href="css/makerd.css">
+        <noscript>Please enable JavaScript to view this site.</noscript>
         <script src="js/marked.js"></script>
         <script>
             if(window.location.protocol != 'https:') {
@@ -12,27 +13,12 @@
             function loadmd(file){
                 var xmlhttp=new XMLHttpRequest();
                 xmlhttp.onreadystatechange=function() {
-                    var math = document.getElementById("mathjax");
-                    if(math){
-                        document.body.removeChild(math);
-                    }
                     if (xmlhttp.readyState==4 && xmlhttp.status==200){
                         document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
-                        var script = document.createElement('script');
-                        script.setAttribute('id', 'mathjax');
-                        script.setAttribute('src', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=default');
-                        document.body.appendChild( script );
                     }
                 }
                 xmlhttp.open("GET", file, true);
                 xmlhttp.send();
-            }
-            function show(obj){
-                var file = obj.getAttribute("file") 
-                loadmd(file);
-                if(file != window.location.hash.substr(1))
-                    window.history.pushState(null, null, "#"+file);
-                document.title = obj.innerText;
             }
             function loadhash(){
                 var file;
@@ -44,19 +30,19 @@
                 loadmd(file);
                 document.title = file;
             }
-            function backreload(){
-                window.location.replace(window.location.href);
-            }
         </script>
     </head>
-    <body onload="loadmd('README.md')" onhashchange="loadhash()" onpopState="backreload()">
+    <body onload="loadhash()" onhashchange="loadhash()">
         <div id="index">
             <ul class="sumary">
-                <li><a href="javascript:void(0);" onclick="show(this);" file="first.md">first</a></li>
+                <li><a href="#README.md">index</a></li>
+                <li><a href="#first.md">first</a></li>
             </ul>
         </div>
         <div id="content">
-            <div id="md-content"/>
+            <div id="md-content"></div>
+            <hr/>
+            <div id="comment">You can comment <a href="https://github.com/choury/choury.github.io/issues/new">here</a></div>
         </div>
     </body>
 </html>
