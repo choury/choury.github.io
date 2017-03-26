@@ -10,24 +10,23 @@
             if(window.location.protocol != 'https:') {
                location.href = location.href.replace("http://", "https://");
             }
-            function loadmd(file){
-                var xmlhttp=new XMLHttpRequest();
-                xmlhttp.onreadystatechange=function() {
-                    if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                        document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
-                    }
-                }
-                xmlhttp.open("GET", file, true);
-                xmlhttp.send();
-            }
+            var file = "README.md"
             function loadhash(){
-                var file;
                 if(window.location.hash == ''){
                     file = 'README.md'
                 }else{
                     file = window.location.hash.substr(1);
                 }
-                loadmd(file);
+                var xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function() {
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                        document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
+                        reset(file, "http://blog.choury.com/"+file);
+                    }
+                }
+                xmlhttp.open("GET", file, true);
+                xmlhttp.send();
+
                 document.title = file;
             }
         </script>
@@ -40,7 +39,33 @@
         </div>
         <div id="content">
             <div id="md-content"></div>
-            <div id="comment"><hr />You can comment <a href="https://github.com/choury/choury.github.io/issues/new">here</a></div>
+            <div id="disqus_thread"></div>
+            <script>
+            var disqus_shortname = 'choury';
+            var disqus_config = function () {
+                this.page.identifier = file;
+                this.page.url ='http://blog.choury.com/'+file;
+                this.page.title = file;
+            };
+
+            console.log("load to "+file+" (http://blog.choury.com/"+file);
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://choury.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+            var reset = function (newIdentifier, newUrl) {
+                DISQUS.reset({
+                    reload: true,
+                    config: function () {
+                        this.page.identifier = newIdentifier;
+                        this.page.url = newUrl;
+                        this.page.title = newIdentifier;
+                    }
+                });
+            };
+            </script>
         </div>
     </body>
 </html>
