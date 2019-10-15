@@ -6,7 +6,7 @@
         <link type="text/css" rel="stylesheet" href="css/makerd.css">
         <noscript>Please enable JavaScript to view this site.</noscript>
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+        <!--script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script-->
         <script>
             if(window.location.protocol != 'https:') {
                location.href = location.href.replace("http://", "https://");
@@ -31,7 +31,7 @@
                 xmlhttp.onreadystatechange=function() {
                     if (xmlhttp.readyState==4 && xmlhttp.status==200){
                         document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
-                        //reset(file, "http://blog.choury.com/"+file);
+                        reset(file, "http://blog.choury.com/"+file);
                     }
                 }
                 xmlhttp.open("GET", file, true);
@@ -60,12 +60,14 @@
 
             console.log("load to "+file+" (http://blog.choury.com/"+file);
             (function() { // DON'T EDIT BELOW THIS LINE
+                return
                 var d = document, s = d.createElement('script');
                 s.src = 'https://choury.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
             })();
             var reset = function (newIdentifier, newUrl) {
+                return
                 DISQUS.reset({
                     reload: true,
                     config: function () {
