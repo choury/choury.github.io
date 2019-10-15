@@ -11,7 +11,7 @@
             if(window.location.protocol != 'https:') {
                location.href = location.href.replace("http://", "https://");
             }
-            var file = "README.md"
+            var file = "love.md"
             marked.setOptions({
                 gfm: true,
                 tables: true,
@@ -23,7 +23,7 @@
             });
             function loadhash(){
                 if(window.location.hash == ''){
-                    file = 'README.md'
+                    file = 'love.md'
                 }else{
                     file = window.location.hash.substr(1);
                 }
@@ -31,7 +31,7 @@
                 xmlhttp.onreadystatechange=function() {
                     if (xmlhttp.readyState==4 && xmlhttp.status==200){
                         document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
-                        reset(file, "http://blog.choury.com/"+file);
+                        //reset(file, "http://blog.choury.com/"+file);
                     }
                 }
                 xmlhttp.open("GET", file, true);
