@@ -11,7 +11,6 @@
             if(window.location.protocol != 'https:') {
                location.href = location.href.replace("http://", "https://");
             }
-            var file = "love.md"
             marked.setOptions({
                 gfm: true,
                 tables: true,
@@ -21,11 +20,12 @@
                 smartypants: false,
                 xhtml: false
             });
+            var file = "love.md"
             function loadhash(){
                 if(window.location.hash == ''){
                     file = 'love.md'
                 }else{
-                    file = window.location.hash.substr(1);
+                    file = window.location.hash.substr(2);
                 }
                 var xmlhttp=new XMLHttpRequest();
                 xmlhttp.onreadystatechange=function() {
@@ -43,7 +43,7 @@
     <body onload="loadhash()" onhashchange="loadhash()">
         <div id="index">
             <ul class="sumary">
-                <li><a href="#first.md">first</a></li>
+                <li><a href="#!first.md">first</a></li>
             </ul>
         </div>
         <div id="content">
@@ -51,7 +51,7 @@
             <div id="disqus_thread"></div>
             <script>
             function getUrl(file){
-                return window.location.protocol + "://" + window.location.host + "/#" +file;
+                return window.location.protocol + "://" + window.location.host + "/#!" +file;
             }
             var disqus_shortname = 'choury';
             var disqus_config = function () {
@@ -87,6 +87,9 @@
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
                 reset = function (newIdentifier) {
+                    if(typeof DISQUS === 'undefined'){
+                        return;
+                    }
                     DISQUS.reset({
                         reload: true,
                         config: function () {
