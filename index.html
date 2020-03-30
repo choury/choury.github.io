@@ -23,9 +23,9 @@
             var file = "love.md"
             function loadhash(){
                 if(window.location.hash == ''){
-                    file = 'love.md'
+                    file = 'markdown/love.md'
                 }else{
-                    file = window.location.hash.substr(2);
+                    file = 'markdown/' + window.location.hash.substr(2);
                 }
                 var xmlhttp=new XMLHttpRequest();
                 xmlhttp.onreadystatechange=function() {
