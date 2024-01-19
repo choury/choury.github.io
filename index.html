@@ -30,7 +30,7 @@
                 var xmlhttp=new XMLHttpRequest();
                 xmlhttp.onreadystatechange=function() {
                     if (xmlhttp.readyState==4 && xmlhttp.status==200){
-                        document.getElementById("md-content").innerHTML=marked(xmlhttp.responseText);
+                        document.getElementById("md-content").innerHTML=marked.parse(xmlhttp.responseText);
                         reset(file);
                     }
                 }
